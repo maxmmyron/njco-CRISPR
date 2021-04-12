@@ -1,0 +1,6 @@
+/* Styling for the Page.js component. */
+/* NOTE: Styles added here will affect all primary pages; pages are meant to be children inside of the Page class. */
+
+.page-contents {
+    padding: var(--header-height) var(--screen-side-padding) 0;
+}
