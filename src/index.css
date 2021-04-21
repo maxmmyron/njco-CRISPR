@@ -1,22 +1,51 @@
 /* place global application styling here */
-
 :root {
-    --header-height: 128px;
-    --screen-side-padding: 64px;
+    --light-mode-text-primary: #222;
+    --dark-mode-text-primary: #fff;
+    --light-mode-text-secondary: #444;
+    --dark-mode-text-secondary: #ccc;
+
+    --dark-bg: #222;
+    --light-bg: #fff;
+
+    --blue-primary: rgb(61, 73, 240);
+    --blue-secondary: rgb(48, 64, 207);
+    --blue-ternary: rgb(32, 44, 156);
 }
 
-* { box-sizing: border-box; }
+@font-face {
+    font-family: Product Sans;
+    src: url("./assets/fonts/PRODUCT\ SANS\ REGULAR.TTF");
+}
+@font-face {
+    font-family: Product Sans;
+    src: url("./assets/fonts/PRODUCT\ SANS\ BOLD.TTF");
+    font-weight: bold;
+}
+@font-face {
+    font-family: Monument;
+    src: url("./assets/fonts/MonumentExtended-Regular.otf");
+}
+@font-face {
+    font-family: Monument;
+    src: url("./assets/fonts/MonumentExtended-Ultrabold.otf");
+    font-weight: bold;
+}
+
+* { box-sizing: border-box }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }

@@ -1,0 +1,129 @@
+#timeline-container {
+    display: grid;
+    position: relative;
+}
+
+#timeline {
+    position: relative;
+}
+
+#tl-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#tl-line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #000;
+}
+
+.tl-items {
+    position: absolute;
+    padding: 0 64px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tl-item {
+    width: 32px;
+    height: 48px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.tl-dot-selector {
+    position: relative;
+}
+
+.tl-dot {
+    width: 4px;
+    height: 4px;
+    background-color: var(--dark-bg);
+}
+
+.tl-dot, .tl-selected {
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tl-selected {
+    width: 0px;
+    height: 0px;
+    border: 0px solid var(--dark-bg);
+}
+
+.tl-caption {
+    position: absolute;
+    bottom: 10px;
+    font-family: Product Sans;
+    color: var(--light-mode-text-secondary);
+}
+
+.tl-caption, .tl-selected, .tl-dot {
+    transition: 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.tl-item:hover .tl-dot {
+    width: 8px;
+    height: 8px;
+}
+
+.tl-item:hover .tl-selected {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--dark-bg);
+}
+
+.tl-item:hover .tl-caption {
+    bottom: 20px;
+}
+
+
+@media only screen and (min-width: 480px) {
+    
+}
+
+@media only screen and (min-width: 768px) {
+    #timeline-container {
+        grid-template-rows: 96px 1fr;
+        grid-template-columns: 96px 1fr 96px;
+    }
+
+    #timeline {
+        grid-area: 1/2;
+    }
+
+    #timeline-decrement {
+        grid-area: 2/1;
+    }
+
+    #timeline-content {
+        grid-area: 2/2;
+    }
+
+    #timeline-increment {
+        grid-area: 2/3;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #timeline-container {
+        grid-template-rows: 128px 1fr;
+        grid-template-columns: 128px 1fr 128px;
+    }   
+}

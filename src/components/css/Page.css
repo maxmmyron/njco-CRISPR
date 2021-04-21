@@ -1,6 +1,255 @@
 /* Styling for the Page.js component. */
 /* NOTE: Styles added here will affect all primary pages; pages are meant to be children inside of the Page class. */
 
-.page-contents {
-    padding: var(--header-height) var(--screen-side-padding) 0;
+.page > div {
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+#menu {
+    z-index: 5;
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+} 
+
+.menu-piece {
+    width: 100vw;
+    height: 50%;
+}
+
+#menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 32px;
+    height: 100%;
+    grid-area: 2/1;
+}
+
+.menu-item {
+    font-family: Monument;
+    font-size: 24px;
+    margin: 8px 0;
+}
+
+.menu-item a {
+    color: white;
+    padding-left: 0;
+    text-decoration: none;
+    transition: 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.menu-item:hover a { padding-left: 8px }
+
+#menu-button {
+    position: fixed;
+    width: 28px;
+    height: 28px;
+    right: 16px;
+    top: 16px;
+    background-color: grey;
+    cursor: pointer;
+    z-index: 6;
+}
+
+#menu-piece-left {
+    background:linear-gradient(to bottom, var(--blue-primary), var(--blue-ternary));
+    position: relative;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 1fr 60px;
+}
+
+#menu-piece-right {
+    background:linear-gradient(to bottom, var(--blue-ternary), var(--blue-secondary));
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    grid-template-rows: 1fr;
+}
+
+#menu-piece-left .top-divider-container {
+    grid-area: 1/1/1/3;
+    position: relative;
+}
+
+#menu-piece-right .top-divider-container { display: none }
+
+#menu-piece-left .right-divider-container {
+    grid-area: 1/2/3/2;
+    position: relative;
+}
+
+#menu-piece-right .right-divider-container { grid-area: 1/2 }
+
+#menu-divider { grid-area: 1/1/3/3; opacity: 0.5 }
+
+.divider-container { position: relative; opacity: 0.5 }
+
+.divider { background-color: white }
+.divider-dark { background-color: #222 }
+
+.divider-horz {
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+}
+
+.divider-vert { width: 1px }
+
+#credits {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 12px;
+    grid-area: 1/1;
+    color:white;
+    font-family: Product Sans;
+    width: 100%;
+}
+
+#page-transition {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    z-index: 1000;
+}
+
+.transition-piece {
+    width: 50%;
+    background-color: var(--blue-secondary);
+    height: 100%;
+}
+
+.transition-piece:nth-of-type(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transition-piece svg {
+    width: 128px;
+    height: 128px;
+}
+
+#menu-img-container div {
+    background-color: blue;
+    width: 100%;
+    height: 100%;
+}
+
+#menu-img-container {
+    opacity: 0;
+    padding: 24px;
+    grid-area: 1/1;
+    transition: opacity 0.6s cubic-bezier(0.83, 0, 0.17, 1), transform 0s;
+}
+
+#menu-img-container.do-show {
+    opacity: 1;
+}
+
+
+@media only screen and (min-width: 480px) {
+    
+}
+
+@media only screen and (min-width: 768px) {
+    #menu-button {
+        top: 32px;
+        right: 32px;
+        width: 32px;
+        height: 32px;
+    }
+    #menu { flex-direction: row }
+    .menu-piece {
+        width: 50%;
+        height: 100vh;
+        z-index: 10;
+    }
+    .menu-item {
+        padding: 0;
+        margin: 8px 0;
+        font-size: 36px;
+        display: flex;
+        flex-direction: column;
+    }
+    .menu-item-border {
+        height: 1px;
+        width: 0%;
+        background-color: white;
+        transition: 0.8s cubic-bezier(0.83, 0, 0.17, 1);
+    }
+    .menu-item:hover .menu-item-border{ width: 100% }
+    #menu-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+    }
+    .menu-item:hover a { padding-left: 24px }
+
+    #menu-piece-left, #menu-piece-right { background:linear-gradient(to bottom, var(--blue-primary), var(--blue-secondary)) }
+
+    #menu-piece-right {
+        grid-template-rows: 96px 1fr;
+        grid-template-columns: 1fr 96px;
+    }
+    #menu-piece-left {
+        grid-template-rows: 96px 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    #menu-piece-left .top-divider-container { grid-area: 1/1 }
+
+    #menu-piece-right .top-divider-container {
+        display: block;
+        position: relative;
+        grid-area: 1/1/1/3;
+    }
+
+    #menu-piece-left .right-divider-container { display: none }
+    #menu-piece-right .right-divider-container { grid-area: 1/2/3/2 }
+
+    #credits {
+        display: grid;
+        writing-mode: sideways-lr;
+        grid-area: 2/2;
+    }
+    #menu-img-container {
+        grid-area: 2/1;
+    }
+
+    #menu-img-container {
+        padding: 42px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #menu-button {
+        width: 48px;
+        height: 48px;
+    }
+    .menu-item { 
+        font-size: 54px;
+        margin: 12px 0;
+        padding: 0;
+    }
+
+    #menu-piece-left { grid-template-rows: 112px 1fr }
+    #menu-piece-right {
+        grid-template-rows: 112px 1fr;
+        grid-template-columns: 1fr 112px;
+    }
+
+    #menu-img-container {
+        padding: 64px;
+    }
 }
