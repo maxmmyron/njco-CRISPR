@@ -5,7 +5,7 @@ export default function JigglyText(props) {
 
     const divideText = (text) => {
         let c = [...text];
-        return c.map((char, i) => <motion.span className="letter" key={char + i} variants={letterVariant}>{char === ' ' ? '\u00A0' : char}</motion.span>);
+        return c.map((char, i) => <motion.span className="letter" key={i} variants={letterVariant}>{char === ' ' ? '\u00A0' : char}</motion.span>);
     };
 
     const jigglyVariant = {

@@ -11,8 +11,8 @@ export default function SubPage(props) {
     const locomotiveScrollRef = createRef();
 
     const eases = {
-        easeOutQuart: [0.22, 1, 0.36, 1],
-        easeInOutQuart: [0.83, 0, 0.17, 1]
+        easeOutQuint: [0.22, 1, 0.36, 1],
+        easeInOutQuint: [0.83, 0, 0.17, 1]
     };
 
     const exitBlockVariant = {
@@ -25,7 +25,7 @@ export default function SubPage(props) {
             opacity: 1,
             transition: {
                 duration: 1.4,
-                ease: eases.easeOutQuart
+                ease: eases.easeOutQuint
             }
         }
     };
@@ -35,14 +35,14 @@ export default function SubPage(props) {
             width: "0%",
             transition: {
                 duration: 0.8,
-                ease: eases.easeInOutQuart
+                ease: eases.easeInOutQuint
             }
         },
         animate: {
             width: "100%",
             transition: {
                 duration: 0.8,
-                ease: eases.easeInOutQuart
+                ease: eases.easeInOutQuint
             }
         }
     };
@@ -52,14 +52,14 @@ export default function SubPage(props) {
             height: "0%",
             transition: {
                 duration: 0.8,
-                ease: eases.easeInOutQuart
+                ease: eases.easeInOutQuint
             }
         },
         animate: {
             height: "100%",
             transition: {
                 duration: 0.8,
-                ease: eases.easeInOutQuart
+                ease: eases.easeInOutQuint
             }
         }
     };
@@ -76,7 +76,7 @@ export default function SubPage(props) {
             right: window.innerWidth < 768 ? -64 : -96,
             transition: {
                 duration: 1.6,
-                ease: eases.easeInOutQuart
+                ease: eases.easeInOutQuint
             }
         }
     };
@@ -91,7 +91,7 @@ export default function SubPage(props) {
             opacity: 1,
             transition: {
                 duration: 1.4,
-                ease: eases.easeOutQuart
+                ease: eases.easeOutQuint
             }
         }
     };
@@ -99,13 +99,14 @@ export default function SubPage(props) {
     useEffect(() => {
         const scroll = new LocomotiveScroll({
             el: locomotiveScrollRef.current,
-            smooth: true
+            smooth: true,
+            direction: props.horz ? 'horizontal' : 'vertical'
         });
     }, [locomotiveScrollRef]);
 
     return (
         <Page>
-            <div id="page" className="page-inner" ref={locomotiveScrollRef}>
+            <div id="page" className="page-inner" data-horizontal={props.horz ? "true" : "false"} data-scroll-container ref={locomotiveScrollRef}>
                 <div className="page-contents">
                     <div className="page-landing-container">
                         <div className="page-landing">

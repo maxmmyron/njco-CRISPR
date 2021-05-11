@@ -20,19 +20,24 @@
 .menu-piece {
     width: 100vw;
     height: 50%;
+    overflow: hidden;
+}
+
+#menu-piece-left {
+    height: 100%;
 }
 
 #menu-list {
     list-style: none;
     margin: 0;
-    padding: 32px;
+    padding: 8px 12px;
     height: 100%;
     grid-area: 2/1;
 }
 
 .menu-item {
     font-family: Monument;
-    font-size: 24px;
+    font-size: 20px;
     margin: 8px 0;
 }
 
@@ -105,7 +110,8 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    margin: 12px;
+    margin: 0;
+    padding: 12px;
     grid-area: 1/1;
     color:white;
     font-family: Product Sans;
@@ -139,8 +145,9 @@
     height: 128px;
 }
 
-#menu-img-container div {
-    background-color: blue;
+#menu-img-container #menu-img {
+    background-image: url("../../assets/img/pexels_orange.jpeg");
+    background-size: cover;
     width: 100%;
     height: 100%;
 }
@@ -156,6 +163,44 @@
     opacity: 1;
 }
 
+.menu-blob-container {
+    position: absolute;
+    z-index: -1;
+    opacity: 0.35;
+    overflow: hidden;
+}
+
+#menu-blob-left-container {
+    top: 0;
+    left: 0;
+}
+
+#menu-blob-right-container {
+    bottom: 0;
+    right: 0;
+}
+
+.menu-blob {
+    animation: blob-rotate 60s linear 0s infinite;
+}
+
+#menu-home-link {
+    grid-area: 1/1;
+    position: absolute;
+    font-family: Monument;
+    color: var(--dark-mode-text-primary);
+    margin: 16px;
+    font-size: 16px;
+}
+
+@keyframes blob-rotate {
+    0% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
 
 @media only screen and (min-width: 480px) {
     
@@ -176,7 +221,7 @@
     }
     .menu-item {
         padding: 0;
-        margin: 8px 0;
+        margin: 4px 0;
         font-size: 36px;
         display: flex;
         flex-direction: column;
@@ -196,7 +241,7 @@
     }
     .menu-item:hover a { padding-left: 24px }
 
-    #menu-piece-left, #menu-piece-right { background:linear-gradient(to bottom, var(--blue-primary), var(--blue-secondary)) }
+    #menu-piece-left, #menu-piece-right { background:linear-gradient(to top, var(--blue-primary), var(--blue-secondary)) }
 
     #menu-piece-right {
         grid-template-rows: 96px 1fr;
@@ -230,6 +275,10 @@
     #menu-img-container {
         padding: 42px;
     }
+    #menu-home-link {
+        margin: 32px;
+        font-size: 32px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -239,7 +288,7 @@
     }
     .menu-item { 
         font-size: 54px;
-        margin: 12px 0;
+        margin: 8px 0;
         padding: 0;
     }
 

@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SubPage from '../SubPage'
 
 export default function Resources() {
+
+    //check when imgLoaded changes, if so, then init scroll
+    const [imgLoaded, setImgLoaded] = useState(false);
+
+    //TODO: wait to load LocomotiveMotion until after images finish loading. 
+    //      take a look at https://www.javascriptstuff.com/react-image-gallery/
+    //      and https://www.javascriptstuff.com/detect-image-load/ for helpful pointers!
+
+    const CheckLoad = () => {
+        const imgs = [...document.getElementsByTagName("img")];
+        for (const img in imgs) {
+            if(!img.complete) {
+                setImgLoaded(false);
+            }
+        }
+        setImgLoaded(true);
+    };
 
     return (
         <SubPage text={["Works ", "Cited"]} num="07">
             <div className="container">
                 <div className="text-container">
+                    <h1 className="heading p-scroll-appear" data-scroll>Text Resources</h1>
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>“Addgene: CRISPR Guide.” CRISPR Guide, www.addgene.org/guides/crispr. Accessed 30 Mar. 2021.</p>
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>Barrangou, R., et al. “CRISPR Provides Acquired Resistance Against Viruses in Prokaryotes.” Science, vol. 315, no. 5819, 2007, pp. 1709–12. Crossref, doi:10.1126/science.1138140.</p>
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>Brokowski, Carolyn, and Mazhar Adli. “CRISPR Ethics: Moral Considerations for Applications of a Powerful Tool.” Journal of Molecular Biology, vol. 431, no. 1, 2019, pp. 88–101. Crossref, doi:10.1016/j.jmb.2018.05.044.</p>
@@ -18,6 +36,10 @@ export default function Resources() {
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>Karginov, Fedor V., and Gregory J. Hannon. “The CRISPR System: Small RNA-Guided Defense in Bacteria and Archaea.” Molecular Cell, vol. 37, no. 1, 2010, pp. 7–19. Crossref, doi:10.1016/j.molcel.2009.12.033.</p>
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>Liang, Puping, et al. “CRISPR/Cas9-Mediated Gene Editing in Human Tripronuclear Zygotes.” Protein & Cell, vol. 6, no. 5, 2015, pp. 363–72. Crossref, doi:10.1007/s13238-015-0153-5.</p>
                     <p className="paragraph p-citation p-scroll-appear" data-scroll>Palmer, Chris. “Antiretroviral Therapy Combined With CRISPR Gene Editing Can Eliminate HIV Infection in Mice.” National Institute on Drug Abuse, 14 Feb. 2020, www.drugabuse.gov/news-events/nida-notes/2020/02/antiretroviral-therapy-combined-crispr-gene-editing-can-eliminate-hiv-infection-in-mice.</p>
+                    <h1 className="heading p-scroll-appear">Image Credits</h1>
+                    <div className="container-break">
+                        <img src="https://images.pexels.com/photos/7258259/pexels-photo-7258259.jpeg" alt="a" onLoad={CheckLoad()}/>
+                    </div>
                 </div>
             </div>
         </SubPage>

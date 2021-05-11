@@ -8,9 +8,9 @@
     --dark-bg: #222;
     --light-bg: #fff;
 
-    --blue-primary: rgb(61, 73, 240);
-    --blue-secondary: rgb(48, 64, 207);
-    --blue-ternary: rgb(32, 44, 156);
+    --blue-primary: #2142E4 /*rgb(61, 73, 240)*/;
+    --blue-secondary: #2575DE /*rgb(48, 64, 207)*/;
+    --blue-ternary: #5593E4 /*rgb(32, 44, 156)*/;
 }
 
 @font-face {
