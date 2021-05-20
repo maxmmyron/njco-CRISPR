@@ -65,9 +65,7 @@
     flex-direction: column;
 }
 
-#scroll-icon img {
-    width: 16px;
-}
+#scroll-icon img { width: 16px }
 
 /********************/
 /* CRISPR DEFINTION */
@@ -76,35 +74,26 @@
 #crispr-definition {
     min-height: 100vh;
     width: 100%;
-    background-color: var(--blue-primary);
-}
-
-#crispr-definition div {
-    padding: 24px;
 }
 
 #def-h1 {
     font-size: 42px;
-    color:white;
+    color:var(--light-mode-text-primary);
     font-family: Monument;
     font-weight: normal;
     letter-spacing: 2px;
     display: inline-block;
     overflow: hidden;
-
     opacity: 0;
     scale: 1.1;
-
     transition: 1.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #def-p {
     font-size: 22px;
-    color:white;
+    color:var(--light-mode-text-secondary);
     font-family: Product Sans;
-
     opacity: 0;
-
     transition: 1.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -113,8 +102,14 @@
     scale: 1.0 !important;
 }
 
-#def-p.is-inview{
-    opacity: 1 !important;
+#def-p.is-inview{ opacity: 1 !important }
+
+#home-landing-canvas { display: none }
+
+#footer {
+    padding: 16px 0;
+    color: var(--light-mode-text-secondary);
+    font-family: Product Sans;
 }
 
 @media only screen and (min-width: 480px) {
@@ -123,9 +118,7 @@
         text-align: right;
         padding: 0;
     }
-    #landing-paragraph p {
-        font-size: 16px
-    }
+    #landing-paragraph p { font-size: 16px }
 }
 
 @media only screen and (min-width: 768px) {
@@ -165,31 +158,25 @@
     #scroll-indicator { grid-area: 4/1/4/6 }
 
     #crispr-definition {
-        height: 120vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    #crispr-definition div {
-        padding: 64px;
+    #home-landing-canvas {
+        display: block;
+        grid-area: 1/1/4/4;
+        opacity: 0.3;
+        z-index: -1;
     }
-
-    #crispr-definition h1 { font-size: 54px }
-
-    #crispr-definition p { font-size: 32px }
 }
 
 @media only screen and (min-width: 1200px) {
     #landing-header { font-size: 124px }
     #landing p { font-size: 24px }
 
-    #crispr-definition { padding: 84px }
-
-    #crispr-definition h1 { font-size: 72px }
-
     #crispr-definition p {
-        font-size: 42px;
+        font-size: 28px;
         line-height: 1.4;
     }
 }

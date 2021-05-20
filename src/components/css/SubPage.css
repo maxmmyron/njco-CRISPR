@@ -3,6 +3,7 @@
     min-height: 80vh;
     grid-template-columns: 1fr;
     grid-template-rows: 2fr 3fr;
+    margin-bottom: 20vh;
 }
 
 .page-landing-container {height: 100vh}
