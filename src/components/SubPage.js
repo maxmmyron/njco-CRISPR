@@ -81,27 +81,18 @@ export default function SubPage(props) {
         }
     };
 
-    const pathVariant = {
-        initial: {
-            bottom: 32,
-            opacity: 0
-        },
-        animate: {
-            bottom: 0,
-            opacity: 1,
-            transition: {
-                duration: 1.4,
-                ease: eases.easeOutQuint
-            }
-        }
-    };
-
     useEffect(() => {
-        const scroll = new LocomotiveScroll({
-            el: locomotiveScrollRef.current,
-            smooth: true,
-            direction: props.horz ? 'horizontal' : 'vertical'
-        });
+        if(!props.overrideLocomotive) {
+            let scroll = new LocomotiveScroll({
+                el: locomotiveScrollRef.current,
+                smooth: true,
+                direction: props.horz ? 'horizontal' : 'vertical'
+            });
+
+            return () => {
+                scroll.destroy();
+            };
+        }
     }, [locomotiveScrollRef]);
 
     return (

@@ -3,12 +3,20 @@
  */
 
 import { motion } from 'framer-motion'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./css/Page.css"
-import JigglyText from './JigglyText';
+import {Canvas, useFrame, useLoader} from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+import bModelRight from "../assets/glb/blob_a.glb"
 
 export default function Page(props) {
+
+    const rightRef = useRef(null);
+    const menuRef = useRef(null);
+    const menuParentRef = useRef(null);
+    const menuButtonRef = useRef(null);
 
     const eases = {
         easeOutQuint: [0.22, 1, 0.36, 1],
@@ -18,7 +26,6 @@ export default function Page(props) {
 
     const [transitionComplete, setTransitionComplete] = useState(false);
     const [menuToggled, setMenuToggle] = useState(false);
-    const [isWorks, setIsWorks] = useState(false);
     const [menuToggleCount, setMenuToggleCount] = useState(0);
 
     const menuButtonVariant = {
@@ -29,7 +36,7 @@ export default function Page(props) {
         closed: {
             borderRadius: "50%",
             translateY: 0,
-            backgroundColor: "#222",
+            backgroundColor: "rgba(0, 0, 0, 0.50)",
             transition: {
                 duration: menuToggleCount > 0 ? 0.4 : 1.4,
                 ease: eases.easeInOutQuint
@@ -38,7 +45,7 @@ export default function Page(props) {
         animate: {
             borderRadius: "0%",
             translateY: 0,
-            backgroundColor: "#fff",
+            backgroundColor: "rgba(255, 255, 255, 0.75)",
             transition: {
                 duration: 0.4,
                 ease: eases.easeInOutQuint
@@ -194,8 +201,6 @@ export default function Page(props) {
         }
     };
 
-    //initial is shown on page load, animate is unshowing on page load, exit is reshowing on page unmount
-
     const transVariant = {
         initial: {
             display: "flex"
@@ -208,11 +213,11 @@ export default function Page(props) {
             }
         },
         exit: {
-            display: isWorks ? "inline-block" : "flex",
-            clipPath: isWorks ? ["circle(0px at 50% 50%)", "circle(2000px at 50% 50%)"] : "none",
-            backgroundColor: isWorks ? "#222" : "transparent",
+            display: "flex",
+            clipPath: "none",
+            backgroundColor: "transparent",
             transition: {
-                when: isWorks ? "afterChildren" : "beforeChildren",
+                when: "beforeChildren",
                 staggerChildren: 0.2
             }
         },
@@ -231,123 +236,97 @@ export default function Page(props) {
             }
         },
         exit: {
-            display: isWorks ? "none" : "inline-block",
+            display: "inline-block",
             translateY: ["100%", "0%"],
             transition: {
-                duration: isWorks ? 0 : 0.8,
-                ease: isWorks ? eases.easeOutQuint : eases.easeInQuint
+                duration: 0.8,
+                ease: eases.easeInQuint
             }
         },
     };
-
-    let lastMouse = {
-        x: 0,
-        y: 0
-    };
-
-    let mouseTravel = {
-        x: 0,
-        y: 0
-    };
-
-    let timestamp = Date.now();
-    let now;
-
-
-    useEffect(() => {
-        const menuList = document.getElementById("menu-list");
-
-        menuList.addEventListener("mousemove", e => {
-            
-            now = Date.now();
-
-            let dt = now - timestamp;
-
-            let mouse = {
-                x: e.pageX,
-                y: e.pageY
-            };
-
-            mouseTravel.x = -(mouse.x - lastMouse.x) / dt / 4;
-            mouseTravel.y = -(mouse.y - lastMouse.y) / dt / 4;
-
-            timestamp = now;
-
-            lastMouse.x = mouse.x;
-            lastMouse.y = mouse.y;
-
-            const pos = {
-                x: (e.clientX - menuList.getBoundingClientRect().x - menuList.clientWidth/2) * 0.05, 
-                y: (e.clientY - menuList.getBoundingClientRect().y - menuList.clientHeight/2) * 0.05
-            };
-
-            document.getElementById("menu-img-container").style.transform = `translate(${pos.x}px, ${pos.y}px) skew(${mouseTravel.x}deg, ${mouseTravel.y}deg)`;
-        });
-
-        menuList.addEventListener("mouseenter", e => {
-            document.getElementById("menu-img-container").classList.add("do-show");
-        });
-
-        menuList.addEventListener("mouseleave", e => {
-            document.getElementById("menu-img-container").classList.remove("do-show");
-        });
-    });
-
-
     
+    const BlobModel = ( {model} ) => {
+        const gltf = useLoader(GLTFLoader, model);
+        const primRef = useRef();
+
+        const obj = gltf.scene;
+
+        obj.traverse((node) => {
+            if (!node.isMesh) return;
+            node.material.wireframe = true;
+          });
+
+        const speed = 0.1;
+
+        useFrame(({ clock }) => {
+            primRef.current.rotation.x = clock.getElapsedTime() * speed;
+            primRef.current.rotation.y = clock.getElapsedTime() * speed;
+            primRef.current.rotation.z = clock.getElapsedTime() * speed;
+        });
+
+        return(
+            <>
+                <primitive ref={primRef} scale={3.5} position={[2, -2, 0]} object={obj} />
+            </>
+        );
+    };
+
     return (
         <div className="page">
             <header id="page-header">
-                <motion.div id="menu" variants={menuVariant} initial="initial" animate={menuToggled ? "animate" : "initial"}>
+                <motion.div id="menu" variants={menuVariant} ref={menuParentRef} initial="initial" animate={menuToggled ? "animate" : "initial"}>
                     <motion.div className="menu-piece" id="menu-piece-left" variants={leftVariant}>
                         <Link to="/" id="menu-home-link">
-                            <JigglyText text={["Home"]}/>
+                            {/*<JigglyText text={["Home"]}/>*/}
+                            Home
                         </Link>
-                        <svg className="menu-blob-container" id="menu-blob-left-container" viewBox="0 0 960 960" width="960" height="100%">
-                            <g>
-                                <path className="menu-blob" d="M455.3 -794.8C590.2 -710.7 700 -589.1 782.6 -450.4C865.2 -311.7 920.6 -155.8 910.8 -5.7C900.9 144.5 825.9 289 734.8 413C643.7 537 536.6 640.4 411.5 717C286.3 793.6 143.2 843.3 -0.5 844.2C-144.2 845 -288.3 797.1 -407 716.7C-525.6 636.4 -618.7 523.7 -686.7 398.9C-754.6 274 -797.3 137 -795.6 1C-793.8 -135 -747.7 -270 -697.7 -425.9C-647.7 -581.8 -593.8 -758.5 -476.9 -853C-360 -947.5 -180 -959.8 -9.9 -942.6C160.2 -925.4 320.3 -878.8 455.3 -794.8" fill={isWorks ? "#444444" : "#34a0de"} />
-                            </g>
-                        </svg>
-                        <motion.ul id="menu-list" variants={listVariant}>
+                        <motion.ul id="menu-list" ref={menuRef} variants={listVariant}>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/history">
-                                    <JigglyText text={["CRISPR's ", "History"]}/>
+                                    {/*<JigglyText text={["CRISPR's ", "History"]}/>*/}
+                                    CRISPR's History
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
-                            <motion.li className="menu-item" variants={itemVariant} onClick={()=>setIsWorks(true)}>
+                            <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/science">
-                                    <JigglyText text={["How ","CRISPR ","Works"]}/>
+                                    {/*<JigglyText text={["How ","CRISPR ","Works"]}/>*/}
+                                    How CRISPR Works
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/process">
-                                    <JigglyText text={["CRISPR ", "in ", "the ", "Lab"]}/>
+                                    {/*<JigglyText text={["CRISPR ", "in ", "the ", "Lab"]}/>*/}
+                                    CRISPR in the Lab
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/applications">
-                                    <JigglyText text={["Applications"]}/>
+                                    {/*<JigglyText text={["Applications"]}/>*/}
+                                    Applications
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/pros-and-cons">    
-                                    <JigglyText text={["Pros ","and ","Cons"]}/>
+                                    {/*<JigglyText text={["Pros ","and ","Cons"]}/>*/}
+                                    Pros and Cons
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/ethics">
-                                    <JigglyText text={["Ethics"]}/>
+                                    {/*<JigglyText text={["Ethics"]}/>*/}
+                                    Ethics
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
                             <motion.li className="menu-item" variants={itemVariant}>
                                 <Link to="/pages/citations">
-                                    <JigglyText text={["Works ", "Cited"]}/>
+                                    {/*<JigglyText text={["Works ", "Cited"]}/>*/}
+                                    Works Cited
                                 </Link>
                                 <div className="menu-item-border"/>
                             </motion.li>
@@ -359,15 +338,7 @@ export default function Page(props) {
                             <motion.div className="divider divider-vert divider-right" variants={dividerRightVariant}></motion.div>
                         </div>
                     </motion.div>
-                    <motion.div className="menu-piece" id="menu-piece-right" variants={rightVariant}>
-                        <svg className="menu-blob-container" id="menu-blob-right-container" viewBox="0 0 960 960" width="960" height="100%">
-                            <g transform="translate(1080 720)">
-                                <path className="menu-blob" d="M242.4 -469.8C316 -377.3 378.8 -316.1 461.1 -243.1C543.4 -170 645.2 -85 671.3 15.1C697.5 115.2 647.9 230.3 574.9 319.5C501.9 408.7 405.5 472 305.7 527.1C206 582.1 103 629.1 1.6 626.3C-99.8 623.6 -199.7 571.2 -280.8 505.3C-361.9 439.5 -424.3 360.2 -464.4 273.8C-504.5 187.3 -522.2 93.7 -530 -4.5C-537.8 -102.7 -535.6 -205.3 -512.6 -321.4C-489.6 -437.4 -445.8 -566.9 -356.9 -650.5C-268 -734.2 -134 -772.1 -24.8 -729.1C84.4 -686.1 168.8 -562.3 242.4 -469.8" fill={isWorks ? "#444444" : "#34a0de"} />
-                            </g>
-                        </svg>
-                        <motion.div id="menu-img-container">
-                            <div id="menu-img"/>
-                        </motion.div>
+                    <motion.div className="menu-piece" id="menu-piece-right" variants={rightVariant} ref={rightRef}>
                         <motion.div id="menu-divider" className="divider" variants={dividerVariant}></motion.div>
                         <div className="top-divider-container divider-container">
                             <motion.div className="divider divider-horz" variants={dividerTopVariant}></motion.div>
@@ -376,9 +347,30 @@ export default function Page(props) {
                             <motion.div className="divider divider-vert divider-right" variants={dividerRightVariant}></motion.div>
                         </div>
                         <motion.p id="credits" variants={creditVariant}>Made with ❤️ By Max Myron and Michael Peluso</motion.p>
+                        <div id="canvas-container-right">
+                            <Canvas className="canvas">
+                                <Suspense fallback={null}>
+                                    <BlobModel model={bModelRight}/>
+                                    <ambientLight intensity={0.5} />
+                                    <directionalLight position={[5,5,5]} intensity={4} color="blue"/>
+                                </Suspense>
+                            </Canvas>
+                        </div>
                     </motion.div>
                 </motion.div>
-                <motion.div id="menu-button" variants={menuButtonVariant} initial="initial" animate={menuToggled ? "animate" : "closed"} onClick={()=> {setMenuToggle(!menuToggled); setMenuToggleCount(menuToggleCount + 1);}}></motion.div>
+                <button id="menu-button" onClick={()=> {
+                    setMenuToggle(!menuToggled); 
+                    setMenuToggleCount(menuToggleCount + 1);
+                    menuButtonRef.current.classList.toggle("menu-button-opened");
+                    menuButtonRef.current.setAttribute('aria-expanded', menuButtonRef.current.classList.contains('opened'))
+                }} aria-label="Main Menu" ref={menuButtonRef}>
+                    <svg viewBox="0 0 100 100">
+                        <path className="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                        
+                        <path className="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+                    </svg>
+                </button>
+                {/*<motion.div id="menu-button" variants={menuButtonVariant} initial="initial" animate={menuToggled ? "animate" : "closed"}></motion.div>*/}
             </header>
             <motion.div variants={{initial:{}, animate:{}, exit:{}}}  initial="initial" animate={transitionComplete ? "animate" : "initial"} exit="exit">
                 {props.children}
