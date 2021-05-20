@@ -14,21 +14,55 @@
 }
 
 .text-container {
-    max-width: 960px;
+    max-width: 720px;
     margin: 0 32px;
 }
 
-.heading {
+.heading, .sub-heading {
     font-family: Monument;
-    color: var(--light-mode-text-primary);
-    font-size: 32px;
     font-weight: normal;   
 }
 
-.paragraph {
+.paragraph, .blockquote, .blockquote-credit, .sub-sub-heading {
     font-family: Product Sans;
+}
+
+.heading {
+    color: var(--light-mode-text-primary);
+    font-size: 32px;
+}
+
+.sub-heading {
+    text-transform: uppercase;
+    color: #555;
+    font-size: 22px;
+    margin-top: 32px;
+}
+
+.sub-sub-heading {
+    color: #666;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.paragraph, .blockquote {
     color: var(--light-mode-text-secondary);
     font-size: 16px;
+    line-height: 1.4;
+}
+
+.paragraph-spacer {
+    height: 1px;
+    background: radial-gradient(var(--light-mode-text-primary), transparent);
+    margin: 32px 16px;
+}
+
+.blockquote-container { margin: 32px 64px }
+
+.blockquote-credit {
+    text-align: right;
+    font-size: 16px;
+    color: #555;
 }
 
 .p-indent{ text-indent: 16px }
@@ -74,6 +108,20 @@
 
 .container-break img {
     width: 100%;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.image-caption-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+.image-caption {
+    width: 340px;
+    margin-left: auto;
+    text-align: right;
+    font-family: "Product Sans";
+    font-size: 14px !important;
+    color: #555;
 }
 
 @media only screen and (min-width: 480px) {
@@ -85,8 +133,13 @@
         padding: 0 32px;
         margin: 0 auto;
     }
+    .paragraph, .blockquote {
+        font-size: 18px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
-    
+    .paragraph, .blockquote {
+        font-size: 20px;
+    }
 }

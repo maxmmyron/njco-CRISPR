@@ -3,6 +3,8 @@ import {Switch, Route} from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Home from './components/Home'
 import './App.css';
+
+// pages
 import History from './components/pages/History'
 import Science from './components/pages/Science'
 import Process from './components/pages/Process'

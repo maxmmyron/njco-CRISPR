@@ -5,12 +5,17 @@
     --light-mode-text-secondary: #444;
     --dark-mode-text-secondary: #ccc;
 
-    --dark-bg: #222;
+    --dark-bg: #131313;
     --light-bg: #fff;
 
-    --blue-primary: #2142E4 /*rgb(61, 73, 240)*/;
-    --blue-secondary: #2575DE /*rgb(48, 64, 207)*/;
-    --blue-ternary: #5593E4 /*rgb(32, 44, 156)*/;
+    /*--blue-primary: #3521e4;
+    --blue-secondary: #4e3eda;
+    --blue-ternary: #5576e4;*/
+    
+
+    --blue-primary: #2746e2;
+    --blue-secondary: #3378d3;
+    --blue-ternary: #5f9ae7;
 }
 
 @font-face {
