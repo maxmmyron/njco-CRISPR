@@ -1,5 +1,4 @@
 import React, { createRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import locomotiveScroll from 'locomotive-scroll';
 import JigglyText from '../JigglyText'
 import '../css/History.css'
@@ -29,10 +28,6 @@ export default function History() {
                 horizontalGesture: true
             },
             reloadOnContextChange: true
-        });
-
-        scroll.on("scroll", e => {
-            console.log(e.speed);
         });
 
     }, [locomotiveScrollRef]);
